@@ -1,0 +1,190 @@
+<!-- Декодеры для zigbee2mqtt -->
+
+<!-- =========================================================== -->
+<!--                zigbee2mqtt-json-frame                       -->
+<!-- =========================================================== -->
+<decoder name="zigbee2mqtt-json-frame">
+  <program_name type="pcre2">^z2m.+</program_name>
+  <prematch>frame=</prematch>
+</decoder>
+
+<!-- Разбираем JSON -->
+<!--
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <prematch>frame=</prematch>
+  <plugin_decoder offset="after_prematch">JSON_Decoder</plugin_decoder>
+</decoder>
+-->
+
+<!--  Namespaces -->
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">([a-zA-Z0-9]+)(?::([a-zA-Z0-9]+))?(?::([a-zA-Z0-9]+))?:</regex>
+  <order>namespace_one, namespace_two, namespace_three</order>
+</decoder>
+
+<!-- Все остальное -->
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">clusterID=(\d+)</regex>
+  <order>clusterID</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">address=(\d+)</regex>
+  <order>device_address</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">groupID=(\d+)</regex>
+  <order>groupID</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">endpoint=(\d+)</regex>
+  <order>endpoint</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">destinationEndpoint=(\d+)</regex>
+  <order>destinationEndpoint</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">wasBroadcast=([a-zA-Z]+)</regex>
+  <order>wasBroadcast</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">linkQuality=(\d+)</regex>
+  <order>linkQuality</order>
+</decoder>
+
+<decoder name="zigbee2mqtt-json-frame-1">
+  <parent>zigbee2mqtt-json-frame</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">frame=(.+)$</regex>
+  <order>frame</order>
+</decoder>
+
+<!-- =========================================================== -->
+<!--        MQTT payload отправленное на брокер                  -->
+<!-- =========================================================== -->
+<decoder name="zigbee2mqtt-mqtt">
+  <program_name type="pcre2">^z2m.+</program_name>
+  <prematch type="pcre2">payload\s'</prematch>
+</decoder>
+
+<!-- Разбираем JSON -->
+<decoder name="zigbee2mqtt-mqtt-1">
+  <parent>zigbee2mqtt-mqtt</parent>
+  <use_own_name>true</use_own_name>
+  <prematch type="pcre2">payload\s'</prematch>
+  <plugin_decoder offset="after_prematch">JSON_Decoder</plugin_decoder>
+</decoder>
+
+<!--  Namespaces -->
+<decoder name="zigbee2mqtt-mqtt-1">
+  <parent>zigbee2mqtt-mqtt</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">([a-zA-Z0-9]+)(?::([a-zA-Z0-9]+))?(?::([a-zA-Z0-9]+))?:</regex>
+  <order>namespace_one, namespace_two, namespace_three</order>
+</decoder>
+
+<!-- Топик -->
+<decoder name="zigbee2mqtt-mqtt-1">
+  <parent>zigbee2mqtt-mqtt</parent>
+  <use_own_name>true</use_own_name>
+  <regex offset="after_regex" type="pcre2">MQTT\spublish:\stopic\s\'(.+?)\/(.+?)\'\,\spayload\s</regex>
+  <order>mqtt.topic,friendly_name</order>
+</decoder>
+
+
+<!-- =========================================================== -->
+<!--                         Разное                              -->
+<!-- =========================================================== -->
+<decoder name="zigbee2mqtt-misk">
+  <program_name type="pcre2">^z2m.+</program_name>
+</decoder>
+
+<!--  Namespaces -->
+<decoder name="zigbee2mqtt-misk-1">
+  <parent>zigbee2mqtt-misk</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">([a-zA-Z0-9]+)(?::([a-zA-Z0-9]+))?(?::([a-zA-Z0-9]+))?:</regex>
+  <order>namespace_one, namespace_two, namespace_three</order>
+</decoder>
+
+<!-- network/route error -->
+<decoder name="zigbee2mqtt-misk-1">
+  <parent>zigbee2mqtt-misk</parent>
+  <use_own_name>true</use_own_name>
+  <regex offset="after_regex" type="pcre2">Received\snetwork/route\serror\s(\S+)\sfor\s\"(\d*)\"</regex>
+  <order>network_error,device_address</order>
+</decoder>
+
+<!-- ZCL error -->
+<decoder name="zigbee2mqtt-misk-1">
+  <parent>zigbee2mqtt-misk</parent>
+  <use_own_name>true</use_own_name>
+  <regex offset="after_regex" type="pcre2">Publish\s\'([a-zA-Z]+)\'\s\'(\S+)\'\sto\s\'(.+?)\'\sfailed\:\s\'Error:\sZCL\scommand\s(\S+?)\s(.+?)\sfailed\s\((.+?)\sfor\s\'(\d+)\'\.\)\'</regex>
+  <order>action,property,friendly_name,datapoint,zcl_command,error,device_address</order>
+</decoder>
+
+<!-- == zh:controller:endpoint: == -->
+<decoder name="zigbee2mqtt-misk-1">
+  <parent>zigbee2mqtt-misk</parent>
+  <use_own_name>true</use_own_name>
+  <regex offset="after_regex" type="pcre2">\sZCL\scommand\s(\dx[\da-fA-F]{16}\/\d)\s(.+)$</regex>
+  <order>datapoint,zcl_command</order>
+</decoder>
+
+
+<!-- =========================================================== -->
+<!--              Разбор только namespases	                        -->
+<!-- =========================================================== -->
+<decoder name="zigbee2mqtt-common">
+  <program_name type="pcre2">^z2m.+</program_name>
+</decoder>
+
+<!--  Namespaces -->
+<decoder name="zigbee2mqtt-common-1">
+  <parent>zigbee2mqtt-common</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2">([a-zA-Z0-9]+)(?::([a-zA-Z0-9]+))?(?::([a-zA-Z0-9]+))?:</regex>
+  <order>namespace_one, namespace_two, namespace_three</order>
+</decoder>
+
+<!-- Шаблоны
+
+<decoder name="zigbee2mqtt-2">
+  <parent>zigbee2mqtt</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2"></regex>
+  <order></order>
+</decoder>
+
+<decoder name="zigbee2mqtt-2">
+  <parent>zigbee2mqtt</parent>
+  <use_own_name>true</use_own_name>
+  <regex type="pcre2"></regex>
+  <order></order>
+</decoder>
+-->
+

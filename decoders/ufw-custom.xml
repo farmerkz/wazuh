@@ -1,0 +1,65 @@
+<!--
+  -  UFW custom decoders
+  -  Author: Andrey Z.
+  -  For the default UFW settings in Ubuntu 22.x
+  -  The built-in kernel decoder is used
+  -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+-->
+
+<!--
+  - 14.02.2025 first commit
+-->
+
+<!-- Examples:
+Feb 14 07:12:31 waf kernel: [UFW BLOCK] IN=enp3s0 OUT= MAC=fa:16:3e:4d:73:7f:00:00:22:33:01:11:08:00 SRC=78.128.113.158 DST=194.32.141.202 LEN=40 TOS=0x00 PREC=0x00 TTL=243 ID=4040 PROTO=TCP SPT=55867 DPT=38166 WINDOW=1024 RES=0x00 SYN URGP=0
+Feb 14 07:10:34 waf kernel: [UFW BLOCK] IN=vpn_vpn-01 OUT= MAC=33:33:00:00:00:01:48:8f:5a:af:48:04:86:dd SRC=fe80:0000:0000:0000:4a8f:5aff:feaf:4804 DST=ff02:0000:0000:0000:0000:0000:0000:0001 LEN=204 TC=0 HOPLIMIT=1 FLOWLBL=515710 PROTO=UDP SPT=5678 DPT=5678 LEN=164
+-->
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <prematch type="pcre2">^\[UFW\s\S+\]\sIN=</prematch>
+   <regex type="pcre2">^\[UFW\s(\S+)\]\s</regex>
+   <order>action</order>
+</decoder>
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <regex type="pcre2" offset="after_regex">IN=(\S*)\sOUT=(\S*)</regex>
+   <order>in_interface,out_interface</order>
+</decoder>
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <regex type="pcre2" offset="after_regex">SRC=(\S*)\s</regex>
+   <order>srcip</order>
+</decoder>
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <regex type="pcre2" offset="after_regex">DST=(\S*)\s</regex>
+   <order>dstip</order>
+</decoder>
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <regex type="pcre2" offset="after_regex">PROTO=(\S*)\s</regex>
+   <order>protocol</order>
+</decoder>
+
+<decoder name="ufw-custom">
+   <type>firewall</type>
+   <parent>kernel</parent>
+   <use_own_name>true</use_own_name>
+   <regex type="pcre2" offset="after_regex">SPT=(\d*)\sDPT=(\d*)\s</regex>
+   <order>srcport,dstport</order>
+</decoder>
