@@ -135,23 +135,31 @@
 <decoder name="zigbee2mqtt-misk-1">
   <parent>zigbee2mqtt-misk</parent>
   <use_own_name>true</use_own_name>
-  <regex offset="after_regex" type="pcre2">Received\snetwork/route\serror\s(\S+)\sfor\s\"(\d*)\"</regex>
-  <order>network_error,device_address</order>
+  <regex offset="after_regex" type="pcre2">Received\snetwork/route\s(error)\s(\S+)\sfor\s\"(\d*)\"</regex>
+  <order>status,network_error,device_address</order>
 </decoder>
 
 <!-- ZCL error -->
 <decoder name="zigbee2mqtt-misk-1">
   <parent>zigbee2mqtt-misk</parent>
   <use_own_name>true</use_own_name>
-  <regex offset="after_regex" type="pcre2">Publish\s\'([a-zA-Z]+)\'\s\'(\S+)\'\sto\s\'(.+?)\'\sfailed\:\s\'Error:\sZCL\scommand\s(\S+?)\s(.+?)\sfailed\s\((.+?)\sfor\s\'(\d+)\'\.\)\'</regex>
-  <order>action,property,friendly_name,datapoint,zcl_command,error,device_address</order>
+  <regex offset="after_regex" type="pcre2">Publish\s\'(\S+?)\'\s\'(\S+?)\'\sto\s\'(.+?)\'\sfailed:\s\'(\S+?):\sZCL\scommand\s(\S+?)\s(.+?)\'$</regex>
+  <order>action,property,friendly_name,status,datapoint,zcl_command</order>
+</decoder>
+
+<!-- == zh:controller:endpoint: with Error == -->
+<decoder name="zigbee2mqtt-misk-1">
+  <parent>zigbee2mqtt-misk</parent>
+  <use_own_name>true</use_own_name>
+  <regex offset="after_regex" type="pcre2">\s([a-zA-Z]+):\sZCL\scommand\s(\dx[\da-fA-F]{16}\/\d)\s([^#]+)</regex>
+  <order>status,datapoint,zcl_command</order>
 </decoder>
 
 <!-- == zh:controller:endpoint: == -->
 <decoder name="zigbee2mqtt-misk-1">
   <parent>zigbee2mqtt-misk</parent>
   <use_own_name>true</use_own_name>
-  <regex offset="after_regex" type="pcre2">\sZCL\scommand\s(\dx[\da-fA-F]{16}\/\d)\s(.+)$</regex>
+  <regex offset="after_regex" type="pcre2">\sZCL\scommand\s(\dx[\da-fA-F]{16}\/\d)\s([^#]+)</regex>
   <order>datapoint,zcl_command</order>
 </decoder>
 
