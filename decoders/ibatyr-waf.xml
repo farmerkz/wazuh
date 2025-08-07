@@ -1,0 +1,148 @@
+<decoder name="ibatyr-waf-kv">
+  <program_name>analyser</program_name>
+  <prematch>WAF-KV:</prematch>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">req_id="([^"]+)"</regex>
+  <order>req_id</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">severity="([^"]+)"</regex>
+  <order>severity</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">webapp_id="([^"]+)"</regex>
+  <order>webapp_id</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">webapp_name="([^"]+)"</regex>
+  <order>webapp_name</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">srcip="([^"]+)"</regex>
+  <order>srcip</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">srcport="([^"]+)"</regex>
+  <order>srcport</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">dstip="([^"]+)"</regex>
+  <order>dstip</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">dstport="([^"]+)"</regex>
+  <order>dstport</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">request_time="([^"]+)"</regex>
+  <order>request_time</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">response_time="([^"]+)"</regex>
+  <order>response_time</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">method="([^"]+)"</regex>
+  <order>method</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">protocol="([^"]+)"</regex>
+  <order>protocol</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">request="([^"]+)"</regex>
+  <order>request</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">request_cookies="([^"]+)"</regex>
+  <order>request_cookies</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">requestMethod="([^"]+)"</regex>
+  <order>requestMethod</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">file_path="([^"]+)"</regex>
+  <order>file_path</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">in="([^"]+)"</regex>
+  <order>in_bytes</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">out="([^"]+)"</regex>
+  <order>out_bytes</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">decision="([^"]+)"</regex>
+  <order>decision</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">block_rule_name="([^"]+)"</regex>
+  <order>block_rule_name</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">block_rule_obj_id="([^"]+)"</regex>
+  <order>block_rule_obj_id</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">action_id="([^"]+)"</regex>
+  <order>action_id</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">action_name="([^"]+)"</regex>
+  <order>action_name</order>
+</decoder>
+
+<decoder name="ibatyr-waf-kv">
+  <parent>ibatyr-waf-kv</parent>
+  <regex type="pcre2">action_parameters="([^"]+)"</regex>
+  <order>action_parameters</order>
+</decoder>
